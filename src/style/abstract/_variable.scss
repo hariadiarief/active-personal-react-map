@@ -1,0 +1,17 @@
+/*================================
+            SCREEN SIZE
+================================*/
+
+//          How to use
+//    @media #{$phoneMQ}{...}
+//    @media #{$tabletMQ}{...}
+//    @media #{$desktopMQ}{...}
+
+/* Small devices (portrait tablets and large phones) -> @media only screen and (max-width: 600px) {...} */
+$phoneMQ: "only screen and (max-width: 600px)";
+
+/* Medium devices (landscape tablets, 601px and 991px) -> @media only screen and (max-width: 991px) {...}*/
+$tabletMQ: "only screen and (max-width: 991px)";
+
+/* Large devices (large-tablet/laptops/desktops, 992px and up) -> @media only screen and (min-width: 992px) {...}*/
+$desktopMQ: "only screen and (min-width: 992px)";
