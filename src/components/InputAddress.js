@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react'
 
-const InputAddress = props => {
-  return (
-    <div>
-      <input type="text" />
-    </div>
-  );
-};
+const InputAddress = (props) => {
+	return (
+		<div>
+			<input type='text' />
+		</div>
+	)
+}
 
-export default INputAddress;
+export default InputAddress

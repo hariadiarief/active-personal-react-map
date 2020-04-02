@@ -1,0 +1,18 @@
+.navigations {
+    display: flex;
+    border-bottom: 1px solid #E4E7E7;
+    overflow-x: auto;
+}
+
+.navigation {
+    white-space: nowrap;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 7px 50px;
+    color: rgba($color: #4F4F4F, $alpha: 0.3);
+}
+
+.navigation--active {
+    border-bottom: 4px solid #17948C;
+    color: #17948C !important;
+}

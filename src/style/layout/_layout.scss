@@ -1,0 +1,8 @@
+.layout__main {
+    padding: 52px;
+
+    @media #{$tabletMQ} {
+        padding: 18px;
+
+    }
+}

@@ -2,8 +2,11 @@
 @import './base/reset';
 @import './base/typography';
 
+@import './page/map';
+@import './layout/layout';
 /*==============================
             COMPONENTS
 ==============================*/
 @import './components/inputAddress';
 @import './components/inputCoordinat';
+@import './components/navigation'

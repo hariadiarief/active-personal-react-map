@@ -1,0 +1,42 @@
+.map {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    &__banner {
+        display: flex;
+        align-items: center;
+
+        svg {
+            width: 350px;
+
+            @media #{$tabletMQ} {
+                width: 150px;
+            }
+        }
+
+
+        span {
+            font-size: 28px;
+            margin-left: 8px;
+            width: 350px;
+
+            @media #{$tabletMQ} {
+                font-size: 21px;
+                width: 175px;
+
+
+            }
+        }
+
+    }
+
+    &__display {
+        background-color: #fff;
+        border: 1px solid #E4E7E7;
+        border-radius: 10px;
+        width: 100%;
+        padding: 32px;
+
+    }
+}
