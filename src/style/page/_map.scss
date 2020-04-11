@@ -39,11 +39,26 @@
         padding: 32px;
     }
 
-    &__display__position {
-        display: flex;
-        flex-direction: column;
+    &__display__position-address {
+        margin-bottom: 18px;
 
-        &__address {
+        >span:nth-child(1) {
+            @include text-primary;
+        }
+
+        >span:nth-child(2) {
+            @include text-secondary;
+        }
+
+    }
+
+    &__display__position-coordinate {
+        display: flex;
+        margin-bottom: 18px;
+
+        >div {
+            margin-right: 32px;
+
             >span:nth-child(1) {
                 @include text-primary;
             }
@@ -52,21 +67,38 @@
                 @include text-secondary;
             }
         }
+    }
 
-        &__coordinate {
-            display: flex;
+    &__display__map {
+        position: relative;
+        background-color: #fff;
+        border: 1px solid #E4E7E7;
+        border-radius: 10px;
+        height: 400px;
 
-            >div {
-                margin-right: 32px;
+        &__suggestion {
+            z-index: 1;
+            border-radius: 10px;
+            position: absolute;
+            background-color: #fff;
+            height: fit-content;
+            padding: 12px 0;
+            max-height: 400px;
+            width: 100%;
 
-                >span:nth-child(1) {
-                    @include text-primary;
-                }
+            >span {
+                padding: 12px 24px;
+                display: block;
+                @include text-primary;
 
-                >span:nth-child(2) {
-                    @include text-secondary;
+                &:hover {
+                    background-color: #F2F3F3;
+                    @include text-primary(#17948C);
+                    cursor: pointer;
+
                 }
             }
+
         }
     }
 }

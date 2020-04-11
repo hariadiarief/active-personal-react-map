@@ -5,21 +5,26 @@ import LocationPicker from 'react-location-picker'
 
 import { ReactComponent as IconGps } from '../images/banner/gps.svg'
 
-const SEARCH_BY_NAME = 1
+const SEARCH_BY_ADDRESS = 1
 const SEARCH_BY_COORDINAT = 2
 
 class Map extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			whichInput: SEARCH_BY_NAME,
-			address: 'Kala Pattar Ascent Trail, Khumjung 56000, Nepal',
+			whichInput: SEARCH_BY_ADDRESS,
+
 			position: {
 				lat: 0,
 				lng: 0,
 			},
-			addressinputed: null,
-			addressesSuggestion: [],
+			address: null,
+
+			addressesSuggestion: {
+				isShow: false,
+				data: [],
+			},
+			addressInputed: null,
 		}
 	}
 
@@ -31,18 +36,21 @@ class Map extends Component {
 	locationInitiation() {
 		window.navigator.geolocation.getCurrentPosition(
 			(position) =>
-				this.setState({
-					position: {
-						lat: position.coords.latitude,
-						lng: position.coords.longitude,
+				this.setState(
+					{
+						position: {
+							lat: position.coords.latitude,
+							lng: position.coords.longitude,
+						},
 					},
-				}),
+					() => this.geoCodeFromCoordinat()
+				),
 			(err) => this.setState({ errorMessage: err.message })
 		)
 	}
 
 	handleLocationChange = ({ position, address }) => {
-		this.setState({ position, address })
+		this.setState({ position, address, addressInputed: address })
 	}
 
 	geoCodeFromAddress(value) {
@@ -52,7 +60,7 @@ class Map extends Component {
 
 		Geocode.fromAddress(value).then(
 			(response) => {
-				this.setState({ addressesSuggestion: response.results })
+				this.setState({ addressesSuggestion: { ...this.state.addressesSuggestion, data: response.results } })
 			},
 			(error) => {
 				console.error(error)
@@ -60,17 +68,32 @@ class Map extends Component {
 		)
 	}
 
-	geoCodeFromLatLng() {
+	selectAddress = (address) => {
+		this.setState({
+			address: address.formatted_address,
+			position: {
+				lat: address.geometry.location.lat,
+				lng: address.geometry.location.lng,
+			},
+			addressesSuggestion: {
+				isShow: false,
+				data: [],
+			},
+			addressInputed: address.formatted_address,
+		})
+	}
+
+	geoCodeFromCoordinat() {
 		Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAP_API)
 		Geocode.setLanguage('id')
 		Geocode.setRegion('ID')
 
-		const { latitude, longitude } = this.state.merchantUpdate.location
-		Geocode.fromLatLng(latitude, longitude).then(
+		const { lat, lng } = this.state.position
+		Geocode.fromLatLng(lat, lng).then(
 			(response) => {
 				const address = response.results[0].formatted_address
 
-				this.setState({ address })
+				this.setState({ address, addressInputed: address })
 			},
 			(error) => {
 				console.error(error)
@@ -79,7 +102,9 @@ class Map extends Component {
 	}
 
 	render() {
-		const { whichInput, position, address, addressinputed, addressesSuggestion } = this.state
+		const { whichInput, position, address, addressInputed, addressesSuggestion } = this.state
+		console.log(addressesSuggestion)
+
 		return (
 			<div className='search-map'>
 				<div className='search-map__banner'>
@@ -88,7 +113,7 @@ class Map extends Component {
 				</div>
 				<div className='search-map__display'>
 					<div className='navigations'>
-						<a className={`navigation ${whichInput === SEARCH_BY_NAME && 'navigation--active'}`} onClick={() => this.setState({ whichInput: SEARCH_BY_NAME })}>
+						<a className={`navigation ${whichInput === SEARCH_BY_ADDRESS && 'navigation--active'}`} onClick={() => this.setState({ whichInput: SEARCH_BY_ADDRESS })}>
 							Pilih Berdasarkan Nama
 						</a>
 						<a className={`navigation ${whichInput === SEARCH_BY_COORDINAT && 'navigation--active'}`} onClick={() => this.setState({ whichInput: SEARCH_BY_COORDINAT })}>
@@ -98,27 +123,14 @@ class Map extends Component {
 
 					{this.renderWhichSearchingType()}
 
-					<div className='search-map__display__position'>
-						<div className='search-map__display__position__address'>
-							<span>Adress :&nbsp;</span>
-							<span>{address}</span>
-						</div>
-						<div className='search-map__display__position__coordinate'>
-							<div>
-								<span>Latitude :&nbsp;</span>
-								<span>{position.lat}</span>
+					<div className='search-map__display__map'>
+						{!addressesSuggestion.isShow ? null : (
+							<div className='search-map__display__map__suggestion'>
+								{addressesSuggestion.data.map((address) => (
+									<span onClick={() => this.selectAddress(address)}>{address.formatted_address}</span>
+								))}
 							</div>
-							<div>
-								<span>Longitude :&nbsp;</span>
-								<span>{position.lng}</span>
-							</div>
-						</div>
-					</div>
-
-					<div>
-						<div>
-							<span></span>
-						</div>
+						)}
 						<LocationPicker
 							containerElement={<div style={{ height: '100%' }} />}
 							mapElement={<div style={{ height: '400px' }} />}
@@ -134,25 +146,84 @@ class Map extends Component {
 	}
 
 	renderWhichSearchingType() {
-		const { whichInput, address, addressInputed, position } = this.state
+		const { whichInput, address, addressInputed, position, addressesSuggestion } = this.state
 		switch (whichInput) {
-			case SEARCH_BY_NAME:
+			case SEARCH_BY_ADDRESS:
 				return (
-					<input
-						className='input--address'
-						value={addressInputed}
-						onChange={({ target: { value } }) => this.setState({ addressInputed: value }, this.geoCodeFromAddress(value))}
-						type='text'
-						placeholder='Input location'
-					/>
+					<Fragment>
+						<input
+							className='input--address'
+							value={addressInputed}
+							onChange={({ target: { value } }) =>
+								this.setState(
+									{
+										addressInputed: value,
+										addressesSuggestion: {
+											...addressesSuggestion,
+											isShow: true,
+										},
+									},
+									this.geoCodeFromAddress(value)
+								)
+							}
+							type='text'
+							placeholder='Input location'
+						/>
+						<div className='search-map__display__position-coordinate'>
+							<div>
+								<span>Latitude :&nbsp;</span>
+								<span>{position.lat}</span>
+							</div>
+							<div>
+								<span>Longitude :&nbsp;</span>
+								<span>{position.lng}</span>
+							</div>
+						</div>
+					</Fragment>
 				)
 
 			case SEARCH_BY_COORDINAT:
 				return (
-					<div className='input--coordinat'>
-						<input type='number' value={position.lat} placeholder='Input Latitude' />
-						<input type='number' value={position.lng} placeholder='Input Langitude' />
-					</div>
+					<Fragment>
+						<div className='input--coordinat'>
+							<input
+								type='number'
+								value={position.lat}
+								onChange={({ target: { value } }) =>
+									this.setState(
+										{
+											position: {
+												...position,
+												lat: parseFloat(value),
+											},
+										},
+										this.geoCodeFromCoordinat
+									)
+								}
+								placeholder='Input Latitude'
+							/>
+							<input
+								type='number'
+								value={position.lng}
+								onChange={({ target: { value } }) =>
+									this.setState(
+										{
+											position: {
+												...position,
+												lng: parseFloat(value),
+											},
+										},
+										this.geoCodeFromCoordinat
+									)
+								}
+								placeholder='Input Langitude'
+							/>
+						</div>
+						<div className='search-map__display__position-address'>
+							<span>Adress :&nbsp;</span>
+							<span>{address}</span>
+						</div>
+					</Fragment>
 				)
 			default:
 				break
