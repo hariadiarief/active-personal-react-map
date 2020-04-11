@@ -89,11 +89,11 @@
             >span {
                 padding: 12px 24px;
                 display: block;
-                @include text-primary;
+                @include text-secondary(#031615);
 
                 &:hover {
                     background-color: #F2F3F3;
-                    @include text-primary(#17948C);
+                    @include text-secondary;
                     cursor: pointer;
 
                 }
