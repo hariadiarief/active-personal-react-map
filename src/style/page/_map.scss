@@ -38,4 +38,35 @@
         width: 100%;
         padding: 32px;
     }
+
+    &__display__position {
+        display: flex;
+        flex-direction: column;
+
+        &__address {
+            >span:nth-child(1) {
+                @include text-primary;
+            }
+
+            >span:nth-child(2) {
+                @include text-secondary;
+            }
+        }
+
+        &__coordinate {
+            display: flex;
+
+            >div {
+                margin-right: 32px;
+
+                >span:nth-child(1) {
+                    @include text-primary;
+                }
+
+                >span:nth-child(2) {
+                    @include text-secondary;
+                }
+            }
+        }
+    }
 }

@@ -1,0 +1,45 @@
+@mixin input {
+    padding: 12px 18px;
+    background: #F2F3F3;
+    border: 1px solid #E4E7E7;
+    border-radius: 10px;
+
+
+    @include text-secondary;
+
+    /* Edge */
+    &::-webkit-input-placeholder {
+        color: #17948C;
+        opacity: 0.5;
+    }
+
+    /* Internet Explorer 10-11 */
+    &:-ms-input-placeholder {
+        color: #17948C;
+        opacity: 0.5;
+    }
+
+    &::placeholder {
+        color: #17948C;
+        opacity: 0.5;
+    }
+
+}
+
+.input--coordinat {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(calc(50% - 25px), 1fr));
+    grid-column-gap: 50px;
+
+    >input {
+        width: 100%;
+        margin-bottom: 8px;
+        @include input;
+    }
+}
+
+.input--address {
+    width: 100%;
+    margin-bottom: 8px;
+    @include input;
+}
