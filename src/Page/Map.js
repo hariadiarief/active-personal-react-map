@@ -81,12 +81,12 @@ class Map extends Component {
 	render() {
 		const { whichInput, position, address, addressinputed, addressesSuggestion } = this.state
 		return (
-			<div className='map'>
-				<div className='map__banner'>
+			<div className='search-map'>
+				<div className='search-map__banner'>
 					<IconGps />
 					<Typed strings={['Seach', 'Your Location']} typeSpeed={50} backSpeed={25} loop />
 				</div>
-				<div className='map__display'>
+				<div className='search-map__display'>
 					<div className='navigations'>
 						<a className={`navigation ${whichInput === SEARCH_BY_NAME && 'navigation--active'}`} onClick={() => this.setState({ whichInput: SEARCH_BY_NAME })}>
 							Pilih Berdasarkan Nama
@@ -98,12 +98,12 @@ class Map extends Component {
 
 					{this.renderWhichSearchingType()}
 
-					<div className='map__display__position'>
-						<div className='map__display__position__address'>
+					<div className='search-map__display__position'>
+						<div className='search-map__display__position__address'>
 							<span>Adress :&nbsp;</span>
 							<span>{address}</span>
 						</div>
-						<div className='map__display__position__coordinate'>
+						<div className='search-map__display__position__coordinate'>
 							<div>
 								<span>Latitude :&nbsp;</span>
 								<span>{position.lat}</span>
