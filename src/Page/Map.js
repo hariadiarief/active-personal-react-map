@@ -102,7 +102,7 @@ class Map extends Component {
 	}
 
 	render() {
-		const { whichInput, position, address, addressInputed, addressesSuggestion } = this.state
+		const { whichInput, position, addressesSuggestion } = this.state
 		console.log(addressesSuggestion)
 
 		return (
@@ -113,12 +113,12 @@ class Map extends Component {
 				</div>
 				<div className='search-map__display'>
 					<div className='navigations'>
-						<a className={`navigation ${whichInput === SEARCH_BY_ADDRESS && 'navigation--active'}`} onClick={() => this.setState({ whichInput: SEARCH_BY_ADDRESS })}>
+						<span className={`navigation ${whichInput === SEARCH_BY_ADDRESS && 'navigation--active'}`} onClick={() => this.setState({ whichInput: SEARCH_BY_ADDRESS })}>
 							Pilih Berdasarkan Nama
-						</a>
-						<a className={`navigation ${whichInput === SEARCH_BY_COORDINAT && 'navigation--active'}`} onClick={() => this.setState({ whichInput: SEARCH_BY_COORDINAT })}>
+						</span>
+						<span className={`navigation ${whichInput === SEARCH_BY_COORDINAT && 'navigation--active'}`} onClick={() => this.setState({ whichInput: SEARCH_BY_COORDINAT })}>
 							Pilih Berdasarkan Koordinat
-						</a>
+						</span>
 					</div>
 
 					{this.renderWhichSearchingType()}
