@@ -10,6 +10,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - create .env file on this project
 - you can see what are environments that you should to be filled
 - filled the environment with your key
+- this app feature **can't be** running well if you don't input environment value
 
 ### 2. Install all dependencies
 type `yarn` or `npm install` terminal
