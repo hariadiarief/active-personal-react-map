@@ -2,7 +2,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ---------------
 
 # The purpose of this application
-- User can search address by inputting location name or coordinate(latitude and longitude)
+- User can searching address or location on map by inputting location name or coordinate(latitude and longitude)
 ---------------
 
 # Step To Run This Program in Your Local Server
