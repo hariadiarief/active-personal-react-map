@@ -8,9 +8,9 @@ class Layout extends Component {
 	render() {
 		return (
 			<Fragment>
-				<header>ini header</header>
+				{/* <header>ini header</header> */}
 				<main className='layout__main'>{this.props.children}</main>
-				<footer>ini footer</footer>
+				{/* <footer>ini footer</footer> */}
 			</Fragment>
 		)
 	}

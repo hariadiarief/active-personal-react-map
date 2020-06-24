@@ -126,6 +126,9 @@ class Map extends Component {
 					<div className='search-map__display__map'>
 						{!addressesSuggestion.isShow ? null : (
 							<div className='search-map__display__map__suggestion'>
+								<div className='action-close'>
+									<span onClick={()=> this.setState({addressesSuggestion : {isShow : false, data :[]} })}>close [X]</span>
+								</div>
 								{addressesSuggestion.data.map((address) => (
 									<span onClick={() => this.selectAddress(address)}>{address.formatted_address}</span>
 								))}
