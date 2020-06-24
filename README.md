@@ -22,3 +22,12 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
+
+-----------
+# Apps Preview
+- Home Screen
+![alt text](src/readme/home.jpg "Home Secreen")
+- Searching address by input location name, and its will show the place suggestion
+![alt text](src/readme/addressing.jpg "Search by location name")
+- Searching address by input coordinate
+![alt text](src/readme/coorinating.jpg "Seach by coordinate")
